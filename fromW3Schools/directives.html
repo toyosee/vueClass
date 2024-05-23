@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE directives</title>
+    <style>
+        .pinkBG {
+          background-color: lightpink;
+        }
+
+        .divBox{
+            background: tomato;
+            padding: 20px;
+            width: 160px;
+            height: 80px;
+        }
+
+        .note {
+                width: 100%;
+                position: relative;
+                margin-top: 40px;
+                aspect-ratio: 1;
+                background-image: url("https://www.w3schools.com/vue/img_notebook.jpg");
+                background-size: 340%;
+                background-position: -345px 0;
+                overflow: hidden;
+            }
+
+        .span{
+            width: 80%;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.2em;
+            transform-origin: 0 0;
+            rotate: 33deg;
+            position: absolute;
+            top: 50px;
+            left: 70px;
+        }
+        .textarea{
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v bind -->
+        <div :class="{pinkBG:vueClass}">
+            {{message}}
+        </div>
+
+        <p v-if="stock_count > 5">
+            In Stock
+        </p>
+
+        <p v-else-if="stock_count > 3">
+            Low Stock
+        </p>
+
+        <p v-else>
+            Not in Stock
+        </p>
+
+        <p v-if="greeting.includes('welcome')">
+            Yes he is here. Welcome Mr {{name}}
+        </p>
+
+        <p v-else>
+            Let's keep waiting
+        </p>
+
+        <!-- v if -->
+        <div>
+            {{description}}
+            <ol>
+                <li v-for="(item, index) in items">{{item}} is in index {{index}}</li>
+            </ol>
+            <!-- Show images of food, based on an array in the Vue instance.
+            <div>
+                <img v-for="x in manyFoods" v-bind:src="x">
+            </div>  -->
+        </div>
+
+        <!-- Event Handling -->
+        <div>
+            <!-- The shorthand for 'v-on' is simply '@'. @:click -->
+            <p>{{`Number + ${count}`}}</p>
+            <button @:click="count++">Increase</button>
+            <button @:click="count--">Decrease</button><br><br>
+
+            <input type="text" @:input="inputCount++">
+            <p>{{`Text count ${inputCount}`}}</p>
+            <strong @:click="writeText">click to show method</strong>
+            <p>{{text}}</p>
+        </div>
+
+        <p>Move the mouse pointer over the box below:</p>
+        <div @:mousemove="mousePos" class="divBox"
+        :style="{backgroundColor:'hsl('+xPos+',80%,80%)'}">
+          <span>xPos: {{ xPos }}</span><br><span>yPos: {{ yPos }}</span>
+        </div>
+
+        <!-- <div class="note">
+            <textarea class="textarea" v-on:input="writeNote" rows="4" cols="20" placeholder="Start writing.."></textarea>
+            <div>
+              <span class="span">{{ note }}</span>
+            </div>
+        </div> -->
+        <div>
+            <img src="https://www.w3schools.com/vue/img_moose.jpg">
+            <p>{{ `Moose Count : ${animCount}` }}</p>
+            <button @:click="countAnimal(+1)">+1</button>
+            <button @:click="countAnimal(+5)">+5</button>
+            <button @:click="countAnimal(-1)">-1</button>
+        </div>
+        <button @:click.once="createAlert">I respond just once</button>
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        // VUE directives
+        // Vue directives are special HTML attributes with the prefix v- 
+        // that give the HTML tag extra functionality.
+        // The shorthand for 'v-bind:' is simply ':'.
+
+        // Conditional Rendering
+        // Conditional rendering in Vue is done by using the v-if, v-else-if and v-else directives.
+        // v-show, sets css display property to false and hides element
+        const app = Vue.createApp({
+            data() {
+                return {
+                    // Directives
+                    vueClass: "false",
+                    message: "HELLO WORLD",
+                    name: "Elijah",
+
+                    // Conditional renderign
+
+                    available: false,
+                    stock_count: 7,
+                    greeting: "Yuo are accountable sir to this place again",
+                    description: "Listings",
+                    items: ["yam", "egg", "garri", "fish"],
+
+                    // Event Handling
+                    // Event handling in Vue is done with the v-on directive, so that we can make something 
+                    // happen when for example a button is clicked.
+                    // Vue methods are code that can be set up to run when an event happens.
+                    // The v-on directive allows us to create pages that respond to what the user does.
+
+                    count : 0,
+
+                    // On input event
+                    inputCount: 0,
+                    text: "",
+                    xPos: 0,
+                    yPos: 0,
+                    note: "",
+                    animCount:0,
+                }
+            },
+            // Vue method is another property like thae data() property
+            // If we want to pass both the event object and another argument, 
+            // there is a reserved name '$event'
+            // example:  <button v-on:click="addAnimal($event, 5)">+5</button>
+
+            methods:{
+                writeText(){
+                    this.text= "I am a method of the property"
+                },
+                mousePos(event){
+                    this.xPos = event.offsetX
+                    this.yPos = event.offsetY
+                },
+                writeNote(event){
+                    this.note = event.target.value
+                },
+                countAnimal(number){
+                    this.animCount += number
+                },
+                createAlert(){
+                    alert("I am happy")
+                }
+            }
+        })
+
+        app.mount("#app")
+    </script>
+</body>
+</html>

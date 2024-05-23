@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE FORMS</title>
+    <style>
+
+            ul {
+                list-style-type: none;
+                }
+            li {
+            border-radius: 5px;
+            padding: 5px;
+            margin: 2px;
+            background-color: rgb(211, 254, 211);
+            }
+            #app label, #app li {
+                padding: 5px;
+                border-radius: 5px;
+                }
+            #app label:hover, #app li:hover {
+                cursor: pointer;
+                background-color: lightgray;
+                }
+
+            .impClass {
+                background-color: rgb(255, 202, 202);
+                font-weight: bold;
+                }
+            #ulFound li {
+                text-decoration: line-through;
+                background-color: rgb(230,230,230);
+                }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>{{greet}}</h2>
+        
+        <form @:submit.prevent="addItem">
+            <p>Add item</p>
+            <p>Item name: <input type="text" required v-model="itemName" placeholder="item name..."></p>
+            <p>How many: <input type="number" required v-model="itemNumber" placeholder="number of items..."></p>
+            <p>
+                Important?
+                <label>
+                  <input type="checkbox" v-model="itemImportant">
+                  {{ isImportant }}
+                </label>
+              </p>
+            <button type="submit">Add item</button>
+        </form>
+
+        <!-- Using v-for to show an automatically updated shopping list below the form -->
+        
+        <h3>Shopping list: Clik on items found to strike them out of the list</h3>
+        <!-- <ul>
+            <li v-for="item in shoppingList" :class="{ impClass: item.important }">{{item.name}}, {{item.number}}</li>
+        </ul> -->
+
+        <!-- Adding more dynamic features for found items -->
+        <ul id="ulToFind">
+            <li v-for="item in shoppingList"
+                :class="{ impClass: item.important }"
+                @:click="item.found=!item.found"
+                v-show="!item.found">
+                  {{ item.name }}, {{ item.number}}
+            </li>
+          </ul>
+          <ul id="ulFound">
+            <li v-for="item in shoppingList"
+                :class="{ impClass: item.important }"
+                @:click="item.found=!item.found"
+                v-show="item.found">
+                  {{ item.name }}, {{ item.number}}
+            </li>
+          </ul>
+
+  
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        // Vue uses the v-model directive when handling forms.
+        const app = Vue.createApp({
+            data(){
+                return {
+                    greet: "Lets discuss VUE forms and add a dynamic check",
+
+                    // models for form
+                    itemName:null,
+                    itemNumber: null,
+                    itemImportant: false,
+                    shoppingList: [
+                        {name:"tomatoes", number:5, important:false, found:false},
+                        { name: 'Soap', number: 1, important: true, found: true }
+                    ]
+
+                }
+            },
+            // Computed property to control text output
+            computed: {
+                isImportant(){
+                    if(this.itemImportant){
+                        return "Yes"
+                    }
+                    else{
+                        return "No"
+                    }
+                }
+            },
+            methods:{
+                // method that adds the item to the shopping list, and clears the form
+                addItem(){
+                    let item = {
+                        name: this.itemName,
+                        number: this.itemNumber,
+                        important: this.itemImportant,
+                        found: false,
+                    }
+                    this.shoppingList.push(item)
+                    this.itemName = null
+                    this.itemNumber = null
+                    this.itemImportant = false
+                }
+
+                // Let's add functionality so that items added to the shopping list 
+                // can be marked as found.
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

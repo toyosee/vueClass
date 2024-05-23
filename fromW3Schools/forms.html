@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE FORMS</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{greet}}</h2>
+        
+        <form @:submit.prevent="addItem">
+            <p>Add item</p>
+            <p>Item name: <input type="text" required v-model="itemName" placeholder="item name..."></p>
+            <p>How many: <input type="number" required v-model="itemNumber" placeholder="number of items..."></p>
+            <button type="submit">Add item</button>
+        </form>
+
+        <!-- Using v-for to show an automatically updated shopping list below the form -->
+        
+        <h3>Shopping list:</h3>
+        <ul>
+            <li v-for="item in shoppingList">{{item.name}}, {{item.number}}</li>
+        </ul>
+
+  
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        // Vue uses the v-model directive when handling forms.
+        const app = Vue.createApp({
+            data(){
+                return {
+                    greet: "Lets discuss VUE forms",
+
+                    // models for form
+                    itemName:null,
+                    itemNumber: null,
+                    shoppingList: [
+                        {name:"tomatoes", number:5}
+                    ]
+
+                }
+            },
+            methods:{
+                // method that adds the item to the shopping list, and clears the form
+                addItem(){
+                    let item = {
+                        name: this.itemName,
+                        number: this.itemNumber
+                    }
+                    this.shoppingList.push(item)
+                    this.itemName = null
+                    this.itemNumber = null
+                }
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

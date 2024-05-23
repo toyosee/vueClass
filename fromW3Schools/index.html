@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE Tutorial</title>
+</head>
+<body>
+
+    <div id="app">
+        {{ message }} 
+        {{'/n Random number: ' + Math.ceil(Math.random()*6) }}
+    </div>
+
+
+    
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<!-- adding vue instance -->
+<script>
+    // Creating a VUE instance 
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: "I am ALIVE",
+                greeting: "Good morning"
+            }
+        }
+    })
+
+    // Mounting the application on the element with id app
+    // this represents text interpolation {{}}. used as a place holder for data
+    app.mount("#app")
+</script>
+    
+</body>
+</html>
