@@ -85,7 +85,6 @@
       this.foods.splice(1,1);
     },
       receiveEmit(foodId){
-        // alert(`You clicked ${foodId}, ${this.foods[0].favorite}`)
         let foundFood = this.foods.find(
           (food) => {return food.name === foodId}
         ) 

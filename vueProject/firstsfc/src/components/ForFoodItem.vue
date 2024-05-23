@@ -11,6 +11,8 @@
 <script>
     export default{
         props: ["foodName", "foodDesc", "isFavorite"],
+        // documenting emits. it becomes easier to use when emit is documented
+        emits: ["toggle-favorite"],
         data(){
             return {
                 // foodIsFavorite : this.isFavorite,

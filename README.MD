@@ -1,5 +1,9 @@
-A LITTLE BUG IN W3SCHOOLS VUE $emit() method tutorial: if you happen to learn VUEjs from w3schools, you might get stuck when you get to VUE $emit(). Purpose of emit is to send data from child element to parent component (App.vue) just as props sends from parent to child.
-this code snippet: 
+A Little Bug in W3Schools Vue $emit() Method Tutorial
+
+If you are learning Vue.js from W3Schools, you might encounter an issue when you get to the Vue $emit() method. The purpose of $emit() is to send data from a child component to a parent component (e.g., App.vue), just as props are used to send data from a parent to a child.
+
+In the tutorial, you might see this code snippet:
+
 methods: {
   receiveEmit(foodId) {
     const foundFood = this.foods.find(
@@ -9,7 +13,8 @@ methods: {
   }
 }
 
-should be written as:
+However, this should be written as:
+
 methods: {
   receiveEmit(foodId) {
     const foundFood = this.foods.find(
@@ -18,8 +23,8 @@ methods: {
     foundFood.favorite = !foundFood.favorite;
   }
 }
-The "return" keyword is missing in the function after using the array find() method and the foundFood variable returned as undefined. The "return" keyword sends the food variable which is now and object according to the example and you can extract the favorites value from the object. (food.favorite)
+The "return" keyword is missing in the arrow function used with the array's find() method. Without "return," the function does not return the correct object, causing the foundFood variable to be undefined. Including "return" ensures that the food object is returned properly, allowing you to update the favorite property correctly.
 
-Happy Coding
+Happy Coding!
 
-Elijah Abolaji.
+Elijah Abolaji
